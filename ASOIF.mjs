@@ -14,13 +14,6 @@ app.get('/', (request, response) => {
     response.send('A Song of Ice and Fire');
 })
 
-app.put('/api/houses/:id', resolveHouseByIndex, (request, response) => {
-    const { body, findHouseIndex } = request;
-
-    mockHouses[findHouseIndex] = { id: mockHouses[findHouseIndex].id, ...body };
-    return response.sendStatus(200);
-})
-
 app.patch('/api/houses/:id', resolveHouseByIndex, (request, response) => {
     const { body, findHouseIndex } = request;
 

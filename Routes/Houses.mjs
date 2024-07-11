@@ -28,4 +28,11 @@ router.post('/api/houses', (request, response) => {
     return response.sendStatus(200);
 })
 
+router.put('/api/houses/:id', resolveHouseByIndex, (request, response) => {
+    const { body, findHouseIndex } = request;
+
+    mockHouses[findHouseIndex] = { id: mockHouses[findHouseIndex].id, ...body };
+    return response.sendStatus(200);
+})
+
 export default router;
