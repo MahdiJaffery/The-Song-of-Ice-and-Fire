@@ -15,11 +15,26 @@ const mockHouses = [{ id: 1, House: 'Targaryen', Words: 'Fire and Blood', Seat: 
 { id: 8, House: 'Tyrell', Words: 'Growing Strong', Seat: 'Highgarden', Descent: 'The Andals' },
 ];
 
+const resolveHouseByIndex = (request, response, next) => {
+    const { params: { id } } = request;
+    const parsedId = parseInt(id);
+
+    if (isNaN(parsedId)) return response.sendStatus(400);
+
+    const findHouseIndex = mockHouses.findIndex((house) => house.id === parsedId);
+
+    if (findHouseIndex === -1) return response.sendStatus(404);
+
+    request.findHouseIndex = findHouseIndex;
+    next();
+}
+
 app.get('/', (request, response) => {
     response.send('A Song of Ice and Fire');
 })
 
 app.get('/api/houses', (request, response) => {
+    const { query: { filter, value } } = request;   //  http://localhost:${PORT}/api/houses?filter=filter-value&value=value-value
     response.send(mockHouses);
 })
 
