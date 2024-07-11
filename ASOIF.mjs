@@ -24,10 +24,12 @@ app.get('/', (request, response) => {
     response.send('A Song of Ice and Fire');
 })
 
-app.get('/api/houses', (request, response) => {
-    const { query: { filter, value } } = request;   //  http://localhost:${PORT}/api/houses?filter=filter-value&value=value-value
-    response.send(mockHouses);
-})
+app.get('/api/houses', query('filter').optional().isLength({ min: 3, max: 32 }).withMessage('Must be 3 - 32 Character long'),
+    query('value').optional().isLength({ min: 3, max: 32 }).withMessage('Must be 3 - 32 Character long'),
+    (request, response) => {
+        const { query: { filter, value } } = request;   //  http://localhost:${PORT}/api/houses?filter=filter-value&value=value-value
+        response.send(mockHouses);
+    })
 
 app.get('/api/houses/:id', resolveHouseByIndex, (request, response) => {
     const { findHouseIndex } = request;
