@@ -13,5 +13,3 @@ export const resolveHouseByIndex = (request, response, next) => {
     request.findHouseIndex = findHouseIndex;
     next();
 }
-
-// export default resolveHouseByIndex;
