@@ -1,4 +1,4 @@
-import express, { response } from 'express';
+import express from 'express';
 import { query, validationResult } from 'express-validator';
 import mockHouses from './Utilities/Houses.mjs';
 const app = express();
