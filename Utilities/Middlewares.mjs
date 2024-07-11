@@ -1,3 +1,5 @@
+import mockHouses from "./Houses.mjs";
+
 const resolveHouseByIndex = (request, response, next) => {
     const { params: { id } } = request;
     const parsedId = parseInt(id);
