@@ -1,11 +1,10 @@
 import express from 'express';
-import houseRouter from './Routes/Houses.mjs'
+import routes from './Routes/index.mjs'
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(houseRouter);
-
+app.use(routes);
 
 app.get('/', (request, response) => {
     response.cookie('A Cookie for a Pookie', 'Cookie', { maxAge: 60000 });
