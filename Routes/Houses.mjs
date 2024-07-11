@@ -42,4 +42,11 @@ router.patch('/api/houses/:id', resolveHouseByIndex, (request, response) => {
     return response.sendStatus(200);
 })
 
+router.delete('/api/houses/:id', resolveHouseByIndex, (request, response) => {
+    const { findHouseIndex } = request;
+
+    mockHouses.splice(findHouseIndex, 1);
+    return response.sendStatus(200);
+})
+
 export default router;

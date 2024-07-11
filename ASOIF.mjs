@@ -14,13 +14,6 @@ app.get('/', (request, response) => {
     response.send('A Song of Ice and Fire');
 })
 
-app.delete('/api/houses/:id', resolveHouseByIndex, (request, response) => {
-    const { findHouseIndex } = request;
-
-    mockHouses.splice(findHouseIndex, 1);
-    return response.sendStatus(200);
-})
-
 app.listen(PORT, () => {
     console.log(`Server listening on PORT ${PORT}\nhttp://localhost:${PORT}`);
 })
