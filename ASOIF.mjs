@@ -1,24 +1,11 @@
 import express from 'express';
 import { query, validationResult } from 'express-validator';
 import mockHouses from './Utilities/Houses.mjs';
+import resolveHouseByIndex from './Utilities/Middlewares.mjs';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-
-const resolveHouseByIndex = (request, response, next) => {
-    const { params: { id } } = request;
-    const parsedId = parseInt(id);
-
-    if (isNaN(parsedId)) return response.sendStatus(400);
-
-    const findHouseIndex = mockHouses.findIndex((house) => house.id === parsedId);
-
-    if (findHouseIndex === -1) return response.sendStatus(404);
-
-    request.findHouseIndex = findHouseIndex;
-    next();
-}
 
 app.get('/', (request, response) => {
     response.send('A Song of Ice and Fire');
