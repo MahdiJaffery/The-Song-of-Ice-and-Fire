@@ -44,6 +44,14 @@ app.get('/api/houses/:id', resolveHouseByIndex, (request, response) => {
     response.status(200).send(mockHouses[findHouseIndex]);
 })
 
+app.post('/api/houses', (request, response) => {
+    const { body } = request;
+    const newHouse = { id: mockHouses.length + 1, ...body };
+
+    mockHouses.push(newHouse);
+    return response.sendStatus(200);
+})
+
 app.listen(PORT, () => {
     console.log(`Server listening on PORT ${PORT}\nhttp://localhost:${PORT}`);
 })
