@@ -5,6 +5,10 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+app.get('/', (request, response) => {
+    response.send('A Song of Ice and Fire');
+})
+
 app.listen(PORT, () => {
     console.log(`Server listening on PORT ${PORT}\nhttp://localhost:${PORT}`);
 })
