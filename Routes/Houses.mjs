@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { query } from 'express-validator'
 import mockHouses from '../Utilities/Houses.mjs';
-import resolveHouseByIndex from '../Utilities/Middlewares.mjs';
+import { resolveHouseByIndex } from '../Utilities/Middlewares.mjs';
 const router = Router();
 
 router.get('/api/houses', query('filter').optional().isLength({ min: 3, max: 32 }).withMessage('Must be 3 - 32 Character long'),

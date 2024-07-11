@@ -1,6 +1,6 @@
 import mockHouses from "./Houses.mjs";
 
-const resolveHouseByIndex = (request, response, next) => {
+export const resolveHouseByIndex = (request, response, next) => {
     const { params: { id } } = request;
     const parsedId = parseInt(id);
 
@@ -14,4 +14,4 @@ const resolveHouseByIndex = (request, response, next) => {
     next();
 }
 
-export default resolveHouseByIndex;
+// export default resolveHouseByIndex;
