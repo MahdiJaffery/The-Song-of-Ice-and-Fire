@@ -35,4 +35,11 @@ router.put('/api/houses/:id', resolveHouseByIndex, (request, response) => {
     return response.sendStatus(200);
 })
 
+router.patch('/api/houses/:id', resolveHouseByIndex, (request, response) => {
+    const { body, findHouseIndex } = request;
+
+    mockHouses[findHouseIndex] = { ...mockHouses[findHouseIndex], ...body };
+    return response.sendStatus(200);
+})
+
 export default router;
