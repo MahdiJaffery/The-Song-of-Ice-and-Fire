@@ -2,24 +2,17 @@ import express from 'express';
 import { query, validationResult } from 'express-validator';
 import mockHouses from './Utilities/Houses.mjs';
 import resolveHouseByIndex from './Utilities/Middlewares.mjs';
+import houseRouter from './Routes/Houses.mjs'
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(houseRouter);
+
 
 app.get('/', (request, response) => {
     response.send('A Song of Ice and Fire');
 })
-
-app.get('/api/houses', query('filter').optional().isLength({ min: 3, max: 32 }).withMessage('Must be 3 - 32 Character long'),
-    query('value').optional().isLength({ min: 3, max: 32 }).withMessage('Must be 3 - 32 Character long'),
-    (request, response) => {
-        const { query: { filter, value } } = request;   //  http://localhost:${PORT}/api/houses?filter=filter-value&value=value-value
-
-        if (!value) return response.status(200).send(mockHouses);
-        if (filter && value) return response.status(200).send(mockHouses.filter((house) => house[filter].includes(value)));
-        return response.sendStatus(400);
-    })
 
 app.get('/api/houses/:id', resolveHouseByIndex, (request, response) => {
     const { findHouseIndex } = request;
