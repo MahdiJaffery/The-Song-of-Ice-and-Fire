@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { response } from 'express';
 import { query, validationResult } from 'express-validator';
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -56,6 +56,13 @@ app.put('/api/houses/:id', resolveHouseByIndex, (request, response) => {
     const { body, findHouseIndex } = request;
 
     mockHouses[findHouseIndex] = { id: mockHouses[findHouseIndex].id, ...body };
+    return response.sendStatus(200);
+})
+
+app.patch('/api/houses/:id', resolveHouseByIndex, (request, response) => {
+    const { body, findHouseIndex } = request;
+
+    mockHouses[findHouseIndex] = { ...mockHouses[findHouseIndex], ...body };
     return response.sendStatus(200);
 })
 
