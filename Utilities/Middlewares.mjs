@@ -1,4 +1,4 @@
-import mockHouses from "./Houses.mjs";
+import { mockHouses } from "./Houses.mjs";
 
 export const resolveHouseByIndex = (request, response, next) => {
     const { params: { id } } = request;

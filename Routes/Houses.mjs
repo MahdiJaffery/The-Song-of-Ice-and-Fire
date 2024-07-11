@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { query } from 'express-validator'
-import mockHouses from '../Utilities/Houses.mjs';
+import { mockHouses } from '../Utilities/Houses.mjs';
 import { resolveHouseByIndex } from '../Utilities/Middlewares.mjs';
 const router = Router();
 
