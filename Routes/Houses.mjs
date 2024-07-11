@@ -14,4 +14,18 @@ router.get('/api/houses', query('filter').optional().isLength({ min: 3, max: 32 
         return response.sendStatus(400);
     })
 
+router.get('/api/houses/:id', resolveHouseByIndex, (request, response) => {
+    const { findHouseIndex } = request;
+
+    response.status(200).send(mockHouses[findHouseIndex]);
+})
+
+router.post('/api/houses', (request, response) => {
+    const { body } = request;
+    const newHouse = { id: mockHouses.length + 1, ...body };
+
+    mockHouses.push(newHouse);
+    return response.sendStatus(200);
+})
+
 export default router;
