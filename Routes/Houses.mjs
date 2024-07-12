@@ -3,7 +3,15 @@ import { mockHouses } from "../Utils/Utils.mjs";
 import { resolveHouseByIndex } from "../Utils/Middlewares.mjs";
 const router = Router();
 
-router.get('/api/Houses', (request, response) => {
+const checkCookies = (request, response, next) => {
+    if (request.cookies.GoT)
+        next();
+    else
+        return response.status(400).send('Missing Cookie(s)');
+
+}
+
+router.get('/api/Houses', checkCookies, (request, response) => {
     const { query: { filter, value } } = request;
 
     if (!value) return response.send(mockHouses);
