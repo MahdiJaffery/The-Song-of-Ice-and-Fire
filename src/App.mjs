@@ -76,8 +76,17 @@ app.post('/api/auth', passport.authenticate('local'), (request, response) => {
 
 app.get('/api/auth/status', (request, response) => {
     console.log(request.user);
+    console.log(request.session);
     if (request.user) return response.send(request.user);
     return request.user ? response.send(request.user) : response.sendStatus(401);
+})
+
+app.post('/api/auth/logout', (request, response) => {
+    if (!request.user) return response.sendStatus(401);
+    request.logout((err) => {
+        if (err) return response.sendStatus(400);
+        return response.sendStatus(200);
+    })
 })
 
 app.listen(PORT, () => {
