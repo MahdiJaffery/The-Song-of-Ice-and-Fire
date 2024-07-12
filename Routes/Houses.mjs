@@ -17,12 +17,16 @@ router.get('/api/houses', query('filter').optional().isLength({ min: 3, max: 32 
 router.get('/api/houses/:id', resolveHouseByIndex, (request, response) => {
     const { findHouseIndex } = request;
 
-    response.status(200).send(mockHouses[findHouseIndex]);
+    if (request.cookies.hello && request.cookies.hello === "world")
+        return response.status(200).send(mockHouses[findHouseIndex]);
+    return response.send({ msg: "You need the correct Cookie" });
 })
 
 router.post('/api/houses', (request, response) => {
     const { body } = request;
     const newHouse = { id: mockHouses.length + 1, ...body };
+
+    console.log(request.cookies);
 
     mockHouses.push(newHouse);
     return response.sendStatus(200);
