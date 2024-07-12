@@ -8,7 +8,6 @@ const checkCookies = (request, response, next) => {
         next();
     else
         return response.status(400).send('Missing Cookie(s)');
-
 }
 
 router.get('/api/Houses', checkCookies, (request, response) => {
@@ -19,13 +18,13 @@ router.get('/api/Houses', checkCookies, (request, response) => {
     return response.sendStatus(400);
 })
 
-router.get('/api/Houses/:id', resolveHouseByIndex, (request, response) => {
-    const { HouseIndex } = request;
+router.get('/api/Houses/:id', checkCookies, resolveHouseByIndex, (request, response) => {
+    const { houseIndex } = request;
 
-    return response.status(200).send(mockHouses[HouseIndex]);
+    return response.status(200).send(mockHouses[houseIndex]);
 })
 
-router.post('/api/Houses', (request, response) => {
+router.post('/api/Houses', checkCookies, (request, response) => {
     console.log(request.body);
     const { body } = request;
     const newHouse = { id: mockHouses.length + 1, ...body };
@@ -34,24 +33,24 @@ router.post('/api/Houses', (request, response) => {
     return response.sendStatus(200);
 })
 
-router.put('/api/Houses/:id', resolveHouseByIndex, (request, response) => {
-    const { body, HouseIndex } = request;
+router.put('/api/Houses/:id', checkCookies, resolveHouseByIndex, (request, response) => {
+    const { body, houseIndex } = request;
 
-    mockHouses[HouseIndex] = { id: mockHouses[HouseIndex].id, ...body };
+    mockHouses[houseIndex] = { id: mockHouses[houseIndex].id, ...body };
     return response.sendStatus(200);
 })
 
-router.patch('/api/Houses/:id', resolveHouseByIndex, (request, response) => {
-    const { body, HouseIndex } = request;
+router.patch('/api/Houses/:id', checkCookies, resolveHouseByIndex, (request, response) => {
+    const { body, houseIndex } = request;
 
-    mockHouses[HouseIndex] = { ...mockHouses[HouseIndex], ...body };
+    mockHouses[houseIndex] = { ...mockHouses[houseIndex], ...body };
     return response.sendStatus(200);
 })
 
-router.delete('/api/Houses/:id', resolveHouseByIndex, (request, response) => {
-    const { HouseIndex } = request;
+router.delete('/api/Houses/:id', checkCookies, resolveHouseByIndex, (request, response) => {
+    const { houseIndex } = request;
 
-    mockHouses.splice(HouseIndex, 1);
+    mockHouses.splice(houseIndex, 1);
     return response.sendStatus(200);
 })
 

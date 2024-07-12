@@ -19,9 +19,9 @@ export const resolveSigilByIndex = (request, response, next) => {
 
     if (isNaN(parsedId)) return response.sendStatus(400);
 
-    const houseIndex = mockSigils.findIndex((house) => house.id === parsedId);
+    const sigilIndex = mockSigils.findIndex((house) => house.id === parsedId);
 
-    if (houseIndex === -1) return response.sendStatus(404);
-    request.houseIndex = houseIndex;
+    if (sigilIndex === -1) return response.sendStatus(404);
+    request.sigilIndex = sigilIndex;
     next();
 }

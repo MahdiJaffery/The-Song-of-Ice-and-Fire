@@ -12,9 +12,9 @@ router.get('/api/Sigils', (request, response) => {
 })
 
 router.get('/api/Sigils/:id', resolveSigilByIndex, (request, response) => {
-    const { SigilIndex } = request;
+    const { sigilIndex } = request;
 
-    return response.status(200).send(mockSigils[SigilIndex]);
+    return response.status(200).send(mockSigils[sigilIndex]);
 })
 
 router.post('/api/Sigils', (request, response) => {
@@ -27,23 +27,23 @@ router.post('/api/Sigils', (request, response) => {
 })
 
 router.put('/api/Sigils/:id', resolveSigilByIndex, (request, response) => {
-    const { body, SigilIndex } = request;
+    const { body, sigilIndex } = request;
 
-    mockSigils[SigilIndex] = { id: mockSigils[SigilIndex].id, ...body };
+    mockSigils[sigilIndex] = { id: mockSigils[sigilIndex].id, ...body };
     return response.sendStatus(200);
 })
 
 router.patch('/api/Sigils/:id', resolveSigilByIndex, (request, response) => {
-    const { body, SigilIndex } = request;
+    const { body, sigilIndex } = request;
 
-    mockSigils[SigilIndex] = { ...mockSigils[SigilIndex], ...body };
+    mockSigils[sigilIndex] = { ...mockSigils[sigilIndex], ...body };
     return response.sendStatus(200);
 })
 
 router.delete('/api/Sigils/:id', resolveSigilByIndex, (request, response) => {
-    const { SigilIndex } = request;
+    const { sigilIndex } = request;
 
-    mockSigils.splice(SigilIndex, 1);
+    mockSigils.splice(sigilIndex, 1);
     return response.sendStatus(200);
 })
 
