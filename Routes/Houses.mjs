@@ -15,7 +15,7 @@ router.get('/api/Houses', checkCookies, (request, response) => {
     const { query: { filter, value } } = request;
 
     if (!value) return response.send(mockHouses);
-    if (filter && value) return response.send(mockHouses.filter((House) => hosue[filter].includes(value)));
+    if (filter && value) return response.send(mockHouses.filter((House) => House[filter].includes(value)));
     return response.sendStatus(400);
 })
 
