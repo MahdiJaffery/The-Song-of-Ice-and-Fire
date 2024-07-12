@@ -2,10 +2,12 @@ import express from 'express';
 import Routes from '../Routes/index.mjs'
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import passport from 'passport';
+import '../Strategies/localStrategy.mjs'
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const usernames = [{ username: 'Robb Stark', password: 'The Young Wolf' },
+export const usernames = [{ username: 'Robb Stark', password: 'The Young Wolf' },
 { username: 'Jon Snow', password: 'The White Wolf' }];
 
 app.use(express.json());
@@ -18,6 +20,8 @@ app.use(session({
         maxAge: 60000 * 5
     }
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(Routes);
 
 app.get('/', (request, resposne) => {
