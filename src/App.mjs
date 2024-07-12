@@ -32,24 +32,24 @@ app.get('/', (request, resposne) => {
     resposne.status(200).send('A Song of Ice and Fire');
 })
 
-app.post('/api/auth', (request, response) => {
-    const { body: { username, password } } = request;
+// app.post('/api/auth', (request, response) => {
+//     const { body: { username, password } } = request;
 
-    const findUser = usernames.find((user) => user.username === username);
+//     const findUser = usernames.find((user) => user.username === username);
 
-    if (!findUser || findUser.password !== password) return response.status(401).send({ msg: 'Bad Credentials' });
+//     if (!findUser || findUser.password !== password) return response.status(401).send({ msg: 'Bad Credentials' });
 
-    request.session.user = findUser;
-    return response.status(200).send(findUser);
-})
+//     request.session.user = findUser;
+//     return response.status(200).send(findUser);
+// })
 
-app.get('/api/auth/status', (request, response) => {
-    request.sessionStore.get(request.sessionID, (err, session) => {
-        console.log(session);
-    })
-    return request.session.user ? response.status(200).send(request.session.user) : response.send(401).send({ msg: 'Not Authenticated' });
+// app.get('/api/auth/status', (request, response) => {
+//     request.sessionStore.get(request.sessionID, (err, session) => {
+//         console.log(session);
+//     })
+//     return request.session.user ? response.status(200).send(request.session.user) : response.send(401).send({ msg: 'Not Authenticated' });
 
-})
+// })
 
 app.post('/api/cart', (request, response) => {
     if (!request.session.user) return response.sendStatus(401);
@@ -68,6 +68,16 @@ app.get('/api/cart', (request, response) => {
     if (!request.session.user) return response.sendStatus(401);
 
     return response.send(request.session.cart ?? []);
+})
+
+app.post('/api/auth', passport.authenticate('local'), (request, response) => {
+    response.send(200);
+})
+
+app.get('/api/auth/status', (request, response) => {
+    console.log(request.user);
+    if (request.user) return response.send(request.user);
+    return request.user ? response.send(request.user) : response.sendStatus(401);
 })
 
 app.listen(PORT, () => {
