@@ -6,12 +6,21 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cookieParser());
-app.use(session());
+app.use(cookieParser('Starks'));
+app.use(session({
+    secret: 'Starks',
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        maxAge: 60000 * 5
+    }
+}));
 app.use(Routes);
 
 app.get('/', (request, resposne) => {
-    resposne.cookie('GoT', 'Clans', { maxAge: 60000 * 5 });
+    console.log(request.session);
+    console.log(request.session.id);
+    resposne.cookie('GoT', 'Clans', { maxAge: 60000 * 5, signed: true });
     resposne.status(200).send('A Song of Ice and Fire');
 })
 

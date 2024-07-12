@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { mockHouses } from "../Utils/Utils.mjs";
 import { resolveHouseByIndex } from "../Utils/Middlewares.mjs";
+import { signedCookies } from "cookie-parser";
 const router = Router();
 
 const checkCookies = (request, response, next) => {
-    if (request.cookies.GoT)
+    if (request.signedCookies.GoT)
         next();
     else
         return response.status(400).send('Missing Cookie(s)');
