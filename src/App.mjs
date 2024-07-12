@@ -5,6 +5,9 @@ import session from 'express-session';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const usernames = [{ username: 'Robb Stark', password: 'The Young Wolf' },
+{ username: 'Jon Snow', password: 'The White Wolf' }];
+
 app.use(express.json());
 app.use(cookieParser('Starks'));
 app.use(session({
@@ -20,8 +23,47 @@ app.use(Routes);
 app.get('/', (request, resposne) => {
     console.log(request.session);
     console.log(request.session.id);
+    request.session.visited = true;
     resposne.cookie('GoT', 'Clans', { maxAge: 60000 * 5, signed: true });
     resposne.status(200).send('A Song of Ice and Fire');
+})
+
+app.post('/api/auth', (request, response) => {
+    const { body: { username, password } } = request;
+
+    const findUser = usernames.find((user) => user.username === username);
+
+    if (!findUser || findUser.password !== password) return response.status(401).send({ msg: 'Bad Credentials' });
+
+    request.session.user = findUser;
+    return response.status(200).send(findUser);
+})
+
+app.get('/api/auth/status', (request, response) => {
+    request.sessionStore.get(request.sessionID, (err, session) => {
+        console.log(session);
+    })
+    return request.session.user ? response.status(200).send(request.session.user) : response.send(401).send({ msg: 'Not Authenticated' });
+
+})
+
+app.post('/api/cart', (request, response) => {
+    if (!request.session.user) return response.sendStatus(401);
+
+    const { body: item } = request;
+    const { cart } = request.session;
+
+    if (cart)
+        cart.push(item);
+    else
+        request.session.cart = [item];
+    return response.status(200).send(item);
+})
+
+app.get('/api/cart', (request, response) => {
+    if (!request.session.user) return response.sendStatus(401);
+
+    return response.send(request.session.cart ?? []);
 })
 
 app.listen(PORT, () => {
