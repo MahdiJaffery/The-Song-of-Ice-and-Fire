@@ -17,7 +17,7 @@ router.get('/api/houses/:id', validationCheck, resolveHouseByIndex, (request, re
     return response.status(200).send(mockHouses[findIndex]);
 })
 
-router.post('/api/houses', (request, response) => {
+router.post('/api/houses', validationCheck, (request, response) => {
     const { body } = request;
     const newHouse = { id: mockHouses.length + 1, ...body };
 
